@@ -2,6 +2,7 @@ yalog
 ===========
 
 yalog is a Node.js logging library that can
+
 * print log messages according to your own functions
 * be customized per module and per logging level
 * have any amount of logging levels
