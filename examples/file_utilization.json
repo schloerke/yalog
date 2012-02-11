@@ -1,0 +1,21 @@
+
+{
+  "logLevels":
+  [ { "title": "test" , "color": "magenta"}
+  , { "title": "trace", "color": "cyan"   }
+  , { "title": "debug", "color": "blue"   }
+  , { "title": "info" , "color": "green"  }
+  , { "title": "sql"  , "color": "magenta"}
+  , { "title": "req"  , "color": "white"  }
+  , { "title": "warn" , "color": "yellow" }
+  , { "title": "error", "color": "red"    , "background": "yellow", "attr": ["bold", "underline"] }
+  ]
+
+, "fileLevels":
+  [ ["*", "error"]
+    ["main", "req"]
+    ["first_file", "trace"]
+    ["second_file", "info"]
+    ["custom_file", ["debug", "sql", "warn", "error"]]
+  ]
+}
