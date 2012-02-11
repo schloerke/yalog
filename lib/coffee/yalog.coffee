@@ -15,14 +15,14 @@ exports._status = status = {
   loggerContext: sys
   file         : null
   color        : process.env.TERM?.indexOf('color')  >= 0
-  seperator    : " "
+  separator    : " "
   fnArr: [
     helper.iso_date()
     helper.session_user_email()
     helper.level()
     helper.file_and_line()
     helper.string("-")
-    helper.message_ignore_express_req_at_first({seperator: " "})
+    helper.message_ignore_express_req_at_first({separator: " "})
   ]
 }
 
@@ -54,8 +54,8 @@ exports.options = (opts) ->
   if _.has(opts, "color")
     status.color = opts.color
 
-  if _.has(opts, "seperator")
-    status.seperator = opts.seperator
+  if _.has(opts, "separator")
+    status.separator = opts.separator
 
   if _.has(opts, "file")
     status.file = opts.file
@@ -118,7 +118,7 @@ exports.with = (mod) ->
 
   logFn         = status.logger
   loggerContext = status.logger
-  seperatorItem = status.seperator
+  separatorItem = status.separator
 
   ret = {
     _inColor      : status.color
@@ -126,7 +126,7 @@ exports.with = (mod) ->
     _logLevels    : status.logLevels
     _moduleLevels : _.keys(moduleLevelMap)
     _has_level    : has_level
-    _seperator    : seperatorItem
+    _separator    : separatorItem
     _logFn        : logFn
     _loggerContext: loggerContext
   }
@@ -164,7 +164,7 @@ exports.with = (mod) ->
             if fnOutput?
               outputs.push(fnOutput)
 
-          str = (ansiColorStart + outputs.join(seperatorItem) + ansiColorEnd)
+          str = (ansiColorStart + outputs.join(separatorItem) + ansiColorEnd)
 
           # console.error("-- str: " + str)
           logFn.call(loggerContext, str)
@@ -176,12 +176,12 @@ exports.with = (mod) ->
         ret[level] = (args...) ->
           outputs = []
           for fn in levelFns
-            fnOutput = fn(level, args)
+            fnOutput = fn(level, args, levelInfo.title, moduleTitle)
             # remove all null or undefined values.  helpers should make them strings to avoid the reduction
             if fnOutput?
               outputs.push(fnOutput)
 
-          joinedOutput = outputs.join(seperatorItem)
+          joinedOutput = outputs.join(separatorItem)
 
           logFn.call(loggerContext, joinedOutput)
           return

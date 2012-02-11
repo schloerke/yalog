@@ -62,7 +62,7 @@ exports.line_number = (opts = {}) ->
       catch e
         # now magic will happen: get line number from callstack
         # console.error(e.stack) # TODO REMOVE
-        return e.stack.split('\n')[3].split(':')[1];
+        return e.stack.split('\n')[4].split(':')[1];
 
 exports.module_title = (opts = {}) ->
   return (mod) ->
@@ -90,10 +90,11 @@ exports.file_and_line = (opts = {}) ->
       return mod_title_fn(level, args) + ":" + line_fn(level, args)
 
 
+removeReturnsRegex = /[^\\]\n/g
 exports.single_line_message = (opts = {}) ->
   showHidden = opts.showHidden
   depth      = opts.depth
-  seperator  = opts.seperator or ""
+  separator  = opts.separator or ""
   return (mod) ->
     return (level, args) ->
       ret = []
@@ -103,14 +104,15 @@ exports.single_line_message = (opts = {}) ->
         else
           ret.push(util.inspect(item, showHidden, depth))
 
-      ret = ret.join(seperator)
-      ret = ret.replace(/[^\\]\\n/g, '') # remove all '\n' but not '\\n' as that is an escaped '\n' and not something introduced by util.inspect
+      ret = ret.join(separator)
+      # remove all '\n' but not '\\n' as that is an escaped '\n' and not something introduced by util.inspect
+      ret = ret.replace(removeReturnsRegex, '')
       return ret
 
 exports.message = (opts = {}) ->
   showHidden = opts.showHidden
   depth      = opts.depth
-  seperator  = opts.seperator or ""
+  separator  = opts.separator or ""
   return (mod) ->
     return (level, args) ->
       ret = []
@@ -120,7 +122,7 @@ exports.message = (opts = {}) ->
         else
           ret.push(util.inspect(item, showHidden, depth))
 
-      ret = ret.join(seperator)
+      ret = ret.join(separator)
       return ret
 
 
