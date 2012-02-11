@@ -32,17 +32,17 @@ function my_custom_counter(mod) {
 
 var yalog = require('../index.js')
 yalog.options(
-  { color         : true // false // true; to force color
-  , logger        : my_log_hook_fn    // console.log
-  , loggerContext : null       // console
-  , seperator     : '; '
+  { color         : false           // true; to force color
+  , logger        : my_log_hook_fn  // console.log
+  , loggerContext : null            // console
+  , separator     : '; '
   , fnArr:
       [ yalog.helper.iso_date()           // no options
       , yalog.helper.session_user_email() // no options
       , yalog.helper.level()              // no options
       , yalog.helper.file_and_line()      // no options
       , "-"                             // plain string to always be inserted
-      , yalog.helper.single_line_message_ignore_express_req_at_first({seperator: "!¿!"})
+      , yalog.helper.single_line_message_ignore_express_req_at_first({separator: " | "})
       , my_custom_counter               // must execute on function that takes args ['module'], then on a function that takes args ['level', 'args']
       ]
 
