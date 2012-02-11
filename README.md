@@ -11,6 +11,12 @@ reqLog is a Node.js logging library that can
 * print messages with module name and current line number so you know from where it was called
 * be configured from file or by a module
 
+Install
+-----
+```javascript
+npm install reqLog
+```
+
 Usage
 -----
 Use npm or download. Then add to your code:
