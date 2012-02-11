@@ -2,7 +2,6 @@ yalog
 ===========
 
 yalog is a Node.js logging library that can
-
 * print log messages according to your own functions
 * be customized per module and per logging level
 * have any amount of logging levels
@@ -28,39 +27,35 @@ var log = require('yalog').with(module);
 *module* is object defined automatically by Node.js. If you don't want automatic module names, replace it with your desired string name.
 
 ```javascript
+var log = require('yalog').with("myAwesomeName");
+```
+
+Arguments are not inspected unless the log level allows for printing of the statement.  This avoids unnecessary object parsing calls.
+
+```javascript
 log.info(arg1, arg2, arg3);
 ```
 
-Strings arguments are not inspected unless the log level allows for printing of the statement.  This avoids unnecessary JSON.stringify calls.
 
-Examples
---------
+Simple Example
+--------------
 
 ```javascript
 var log = require('yalog').with(module);
-log.info('Info message');
-log.debug('Debug message');
-log.warn('Warning message');
-log.error('Error message');
-log.trace('Trace message');
+log.info('Info message');     // 2012-02-00T00:00:00.000Z INFO  main:2 - Info message
+log.debug('Debug message');   // 2012-02-00T00:00:00.000Z DEBUG main:3 - Debug message
+log.warn('Warning message');  // 2012-02-00T00:00:00.000Z WARN  main:4 - Warning message
+log.error('Error message');   // 2012-02-00T00:00:00.000Z ERROR main:5 - Error message
+log.trace('Trace message');   // 2012-02-00T00:00:00.000Z TRACE main:6 - Trace message
 log.info('Array =', [1, 2, 3, 4], '; Object = ', {one: 1, two: 2});
+// 2012-02-00T00:00:00.000Z INFO  main:7 - Array = [ 1, 2, 3, 4 ]; Object = { one: 1, two: 2 }
 ```
 
 
-Output samples
---------------
-
-```
-2012-02-00T00:00:00.000Z INFO  main:2 - Info message
-2012-02-00T00:00:00.000Z DEBUG main:3 - Debug message
-2012-02-00T00:00:00.000Z WARN  main:4 - Warning message
-2012-02-00T00:00:00.000Z ERROR main:5 - Error message
-2012-02-00T00:00:00.000Z TRACE main:6 - Trace message
-2012-02-00T00:00:00.000Z INFO  main:7 - Array = [ 1, 2, 3, 4 ]; Object = { one: 1, two: 2 }
-```
-
-Advance Example
+Advanced Example
 ---------------
+
+Take a look at the [examples](github.com/schloerke/yalog/tree/master/examples) directory for different examples.
 
 ```javascript
 var log = require('./examples/max_utilization_helper').with(module);
@@ -81,8 +76,6 @@ log.debug(req, "Debug counter should be at 1. Counter value:")
 log.trace(req, "this should not execute. Level is not included (too low in stack)")
 //
 ```
-
-Take a look at the examples directory for different uses.
 
 
 Changes
