@@ -58,9 +58,10 @@ Advance Example
 
 ```javascript
 var log = require('./examples/max_utilization_helper').with(module);
+var iden = function(d) {return d;};
 
                                                               // qualifiers to make it a 'req' object
-var req = {session: { user: {email: jobs@metamarkets.com } } , route: {}, res: {}, next: {}};
+var req = {session: { user: {email: "jobs@metamarkets.com" } } , route: {}, res: {}, next: iden};
 var fourtyTwo = 42;
 log.info(req, "The answer to life the universe and everything: '", fourtyTwo, "'")
 // "2012-02-00T00:00:00.000Z; main; jobs@metamarkets.com; INFO ; main:18; The answer to life the universe and everything: '!¿!fourtyTwo!¿!'; 1"
