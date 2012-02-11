@@ -26,6 +26,7 @@ Strings arguments are not inspected unless the log level allows for printing of 
 Examples
 --------
 
+  ```javascript
   var log = require('reqLog').with(module);
   log.info('Info message');
   log.debug('Debug message');
@@ -33,6 +34,7 @@ Examples
   log.error('Error message');
   log.trace('Trace message');
   log.info('Array =', [1, 2, 3, 4], '; Object = ', {one: 1, two: 2});
+  ```
 
 
 Output samples
@@ -48,6 +50,7 @@ Output samples
 Advance Example
 ---------------
 
+  ```javascript
   var log = require('./examples/max_utilization_helper').with(module);
 
                                                                 // qualifiers to make it a 'req' object
@@ -64,7 +67,7 @@ Advance Example
 
   log.trace(req, "this should not execute. Level is not included (too low in stack)")
   //
-
+  ```
 
 Take a look at the examples directory for different uses.
 
