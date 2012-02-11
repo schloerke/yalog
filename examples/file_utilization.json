@@ -13,9 +13,9 @@
 
 , "fileLevels":
   [ ["*", "error"]
-    ["main", "req"]
-    ["first_file", "trace"]
-    ["second_file", "info"]
-    ["custom_file", ["debug", "sql", "warn", "error"]]
+  ,  ["main", "req"]
+  ,  ["first_file", "trace"]
+  ,  ["second_file", "info"]
+  ,  ["custom_file", ["debug", "sql", "warn", "error"] ]
   ]
 }
