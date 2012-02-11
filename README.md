@@ -45,12 +45,12 @@ Output samples
 --------------
 
 ```
-2010-10-02 20:39:03.570 INFO  main:5 - Info message
-2010-10-02 20:39:03.588 DEBUG main:6 - Debug message
-2010-10-02 20:39:03.589 WARN  main:7 - Warning message
-2010-10-02 20:39:03.590 ERROR main:8 - Error message
-2010-10-02 20:39:03.590 TRACE main:9 - Trace message
-2010-10-02 20:39:03.590 INFO  main:10 - Array = [ 1, 2, 3, 4 ], Object = { one: 1, two: 2 }
+2012-02-00T00:00:00.000Z INFO  main:2 - Info message
+2012-02-00T00:00:00.000Z DEBUG main:3 - Debug message
+2012-02-00T00:00:00.000Z WARN  main:4 - Warning message
+2012-02-00T00:00:00.000Z ERROR main:5 - Error message
+2012-02-00T00:00:00.000Z TRACE main:6 - Trace message
+2012-02-00T00:00:00.000Z INFO  main:7 - Array = [ 1, 2, 3, 4 ]; Object = { one: 1, two: 2 }
 ```
 
 Advance Example
