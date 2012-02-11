@@ -15,11 +15,15 @@ Usage
 -----
 Use npm or download. Then add to your code:
 
+  ```javascript
   var log = require('reqLog').with(module);
+  ```
 
 *module* is object defined automatically by Node.js. If you don't want automatic module names, replace it with your desired string name.
 
+  ```javascript
   log.info(arg1, arg2, arg3);
+  ```
 
 Strings arguments are not inspected unless the log level allows for printing of the statement.  This avoids unnecessary JSON.stringify calls.
 
