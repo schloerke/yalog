@@ -1,5 +1,5 @@
 
-reqLog = require('../index.js').options({
+yalog = require('../index.js').options({
   logLevels:
   [ { title: "test" , color: "magenta"}
   , { title: "trace", color: "cyan"   }
@@ -20,7 +20,7 @@ reqLog = require('../index.js').options({
 
 })
 
-var log = reqLog.with("main");
+var log = yalog.with("main");
 
 // // Can produce output with the following file and levels
 // '*'          : ['error']

@@ -1,7 +1,7 @@
-reqLog
+yalog
 ===========
 
-reqLog is a Node.js logging library that can
+yalog is a Node.js logging library that can
 
 * print log messages according to your own functions
 * be customized per module and per logging level
@@ -14,7 +14,7 @@ reqLog is a Node.js logging library that can
 Install
 -----
 ```javascript
-npm install reqLog
+npm install yalog
 ```
 
 Usage
@@ -22,7 +22,7 @@ Usage
 Use npm or download. Then add to your code:
 
 ```javascript
-var log = require('reqLog').with(module);
+var log = require('yalog').with(module);
 ```
 
 *module* is object defined automatically by Node.js. If you don't want automatic module names, replace it with your desired string name.
@@ -37,7 +37,7 @@ Examples
 --------
 
 ```javascript
-var log = require('reqLog').with(module);
+var log = require('yalog').with(module);
 log.info('Info message');
 log.debug('Debug message');
 log.warn('Warning message');

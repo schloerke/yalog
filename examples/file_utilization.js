@@ -1,5 +1,5 @@
 
-reqLog = require('../index.js').options({
+yalog = require('../index.js').options({
   file: "./file_utilization.json"
 })
 

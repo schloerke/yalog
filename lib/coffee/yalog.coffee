@@ -46,7 +46,7 @@ exports.options = (opts) ->
     unless _.has(opts, "logger")
       throw "'logger' not supplied. Must be a function to match the 'loggerContext' (which may have a value of null)"
     unless _.has(opts, "loggerContext")
-      throw "'loggerContext' not supplied. A logger context must be supplied to avoid errors.  Ex. reqLog.opts({logger: console.log, loggerContext: console})"
+      throw "'loggerContext' not supplied. A logger context must be supplied to avoid errors.  Ex. yalog.opts({logger: console.log, loggerContext: console})"
 
     status.logger        = opts.logger
     status.loggerContext = opts.loggerContext

@@ -30,19 +30,19 @@ function my_custom_counter(mod) {
 }
 
 
-var reqLog = require('../index.js')
-reqLog.options(
+var yalog = require('../index.js')
+yalog.options(
   { color         : true // false // true; to force color
   , logger        : my_log_hook_fn    // console.log
   , loggerContext : null       // console
   , seperator     : '; '
   , fnArr:
-      [ reqLog.helper.iso_date()           // no options
-      , reqLog.helper.session_user_email() // no options
-      , reqLog.helper.level()              // no options
-      , reqLog.helper.file_and_line()      // no options
+      [ yalog.helper.iso_date()           // no options
+      , yalog.helper.session_user_email() // no options
+      , yalog.helper.level()              // no options
+      , yalog.helper.file_and_line()      // no options
       , "-"                             // plain string to always be inserted
-      , reqLog.helper.single_line_message_ignore_express_req_at_first({seperator: "!¿!"})
+      , yalog.helper.single_line_message_ignore_express_req_at_first({seperator: "!¿!"})
       , my_custom_counter               // must execute on function that takes args ['module'], then on a function that takes args ['level', 'args']
       ]
 
@@ -69,5 +69,5 @@ reqLog.options(
 
 
 exports.with = function(mod) {
-  return reqLog.with(mod);
+  return yalog.with(mod);
 };

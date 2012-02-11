@@ -1,2 +1,2 @@
 
-module.exports = require('./lib/reqLog');
+module.exports = require('./lib/yalog');
