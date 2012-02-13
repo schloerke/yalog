@@ -1,4 +1,4 @@
-yalog
+yalog... Yet Another Logger
 ===========
 
 yalog is a Node.js logging library that can
@@ -19,19 +19,19 @@ npm install yalog
 
 Usage
 -----
-Use npm or download. Then add to your code:
+Add to your code:
 
 ```javascript
 var log = require('yalog').with(module);
 ```
 
-*module* is object defined automatically by Node.js. If you don't want automatic module names, replace it with your desired string name.
+*module* is object defined automatically by Node.js.  This allows you to copy and paste the line into each file and leverage your filename.  The file name matching is done with ```module.id``` or the filename with the working directory and trailing '.js' removed. If you don't want automatic module names, replace it with your desired string name.
 
 ```javascript
 var log = require('yalog').with("myAwesomeName");
 ```
 
-Arguments are not inspected unless the log level allows for printing of the statement.  This avoids unnecessary object parsing calls.
+Arguments are not inspected unless the log level allows for printing of the statement.  This avoids unnecessary object serialization calls before submitting your log statements.
 
 ```javascript
 log.info(arg1, arg2, arg3);
@@ -59,6 +59,7 @@ Advanced Example
 Take a look at the [examples](github.com/schloerke/yalog/tree/master/examples) directory for different examples.
 
 ```javascript
+// load helper file that sets up defaults and custom functions for logging
 var log = require('./examples/max_utilization_helper').with(module);
 var iden = function(d) {return d;};
 
@@ -66,7 +67,7 @@ var iden = function(d) {return d;};
 var req = {session: { user: {email: "jobs@metamarkets.com" } } , route: {}, res: {}, next: iden};
 var fourtyTwo = 42;
 log.info(req, "The answer to life the universe and everything: '", fourtyTwo, "'")
-// "2012-02-00T00:00:00.000Z; main; jobs@metamarkets.com; INFO ; main:18; The answer to life the universe and everything: '!¿!fourtyTwo!¿!'; 1"
+// "2012-02-00T00:00:00.000Z; main; jobs@metamarkets.com; INFO ; main:18; The answer to life the universe and everything: ' | 42 | '; 1"
 
 log.info(req, "Info counter should be at 2. Counter value:")
 // "2012-02-00T00:00:00.001Z; main; jobs@metamarkets.com; INFO ; main:21; Info counter should be at 2. Counter value:; 2"
@@ -76,6 +77,10 @@ log.debug(req, "Debug counter should be at 1. Counter value:")
 
 log.trace(req, "this should not execute. Level is not included (too low in stack)")
 //
+
+log.info(req, "Current 'req' obj: ", req)
+// "2012-02-00T00:00:00.001Z; main; jobs@metamarkets.com; INFO ; main:30; Current 'req' obj:  | { session: { user: { email: 'jobs@metamarkets.com' } }  route: {}  res: {}  next: [Function] }; 3
+"
 ```
 
 
