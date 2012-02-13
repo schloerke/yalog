@@ -154,6 +154,7 @@ exports.string = (x) ->
       return x
 
 
+exports.process_title = exports.string(process.title)
 
 
 

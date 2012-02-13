@@ -86,8 +86,9 @@ log.info(req, "Current 'req' obj: ", req)
 
 Changes
 -------
+0.0.next - Added process title helper function
 0.0.3 - Fixed "to single line" regex
-0.0.2 - Added init values to helper methods.
+0.0.2 - Added init values to helper methods
 0.0.1 - First npm release
 
 
