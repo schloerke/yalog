@@ -89,7 +89,7 @@ exports.file_and_line = (opts = {}) ->
       return mod_title_fn(level, args) + ":" + line_fn(level, args)
 
 
-removeReturnsRegex = /[^\\]\n/g
+inspectToSingleLineRegex = /(?:^|\n) */g
 exports.single_line_message = (opts = {}) ->
   showHidden = opts.showHidden
   depth      = opts.depth
@@ -106,7 +106,7 @@ exports.single_line_message = (opts = {}) ->
 
       ret = ret.join(separator)
       # remove all '\n' but not '\\n' as that is an escaped '\n' and not something introduced by util.inspect
-      ret = ret.replace(removeReturnsRegex, '') or init
+      ret = ret.replace(inspectToSingleLineRegex, '') or init
       return ret
 
 
