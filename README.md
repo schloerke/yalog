@@ -86,6 +86,7 @@ log.info(req, "Current 'req' obj: ", req)
 
 Changes
 -------
+0.0.2 - Added init values to helper methods.
 0.0.1 - First npm release
 
 
