@@ -10,6 +10,7 @@ is_express_req_obj = (obj) ->
   obj or= {}
   return _.has(obj, "route") and _.has(obj, "res") and _.has(obj, "next")
 
+
 item_by_keys = (obj, keyArr) ->
   item = obj
   for key in keyArr
@@ -17,14 +18,6 @@ item_by_keys = (obj, keyArr) ->
     item = item[key]
 
   return item.toString()
-
-
-# Take an array of keys to retrieve an object
-arg_by_keys_wrapper = (keyArr) ->
-  throw "array is not supplied" unless keyArr
-  return (mod) ->
-    return (level, args) ->
-      return item_by_keys(args, keyArr)
 
 
 req_item_by_keys = (keyArr) ->
@@ -48,11 +41,17 @@ exports.level = (opts = {}) ->
       return realTitle
 
 
-exports.session_user_id = (defArr = ["session", "user", "id"]) ->
+exports.session_user_id = ({init, defArr} = {}) ->
+  defArr ?= ["session", "user", "id"]
+  init   ?= null
   return req_item_by_keys(defArr)
 
-exports.session_user_email = (defArr = ["session", "user", "email"]) ->
-  return req_item_by_keys(defArr)
+
+exports.session_user_email = ({init, defArr} = {}) ->
+  defArr ?= ["session", "user", "email"]
+  init   ?= null
+  return req_item_by_keys(defArr) or init
+
 
 exports.line_number = (opts = {}) ->
   return (mod) ->
@@ -61,8 +60,8 @@ exports.line_number = (opts = {}) ->
         throw new Error()
       catch e
         # now magic will happen: get line number from callstack
-        # console.error(e.stack) # TODO REMOVE
         return e.stack.split('\n')[4].split(':')[1];
+
 
 exports.module_title = (opts = {}) ->
   return (mod) ->
@@ -71,7 +70,7 @@ exports.module_title = (opts = {}) ->
       #   return moduleTitle
 
       unless mod
-        return '<unknown>'
+        return opts.init or '<unknown>'
 
       unless mod.id
         return mod
@@ -94,7 +93,8 @@ removeReturnsRegex = /[^\\]\n/g
 exports.single_line_message = (opts = {}) ->
   showHidden = opts.showHidden
   depth      = opts.depth
-  separator  = opts.separator or ""
+  separator  = opts.separator ? ""
+  init       = opts.init ? null
   return (mod) ->
     return (level, args) ->
       ret = []
@@ -106,13 +106,15 @@ exports.single_line_message = (opts = {}) ->
 
       ret = ret.join(separator)
       # remove all '\n' but not '\\n' as that is an escaped '\n' and not something introduced by util.inspect
-      ret = ret.replace(removeReturnsRegex, '')
+      ret = ret.replace(removeReturnsRegex, '') or init
       return ret
+
 
 exports.message = (opts = {}) ->
   showHidden = opts.showHidden
   depth      = opts.depth
-  separator  = opts.separator or ""
+  separator  = opts.separator ? ""
+  init       = opts.init ? null
   return (mod) ->
     return (level, args) ->
       ret = []
@@ -122,8 +124,10 @@ exports.message = (opts = {}) ->
         else
           ret.push(util.inspect(item, showHidden, depth))
 
-      ret = ret.join(separator)
+      # works because of "falsy" ''.
+      ret = ret.join(separator) or init
       return ret
+
 
 
 do_but_ignore_req_at_first = (fn) ->
@@ -140,10 +144,8 @@ do_but_ignore_req_at_first = (fn) ->
           return fn_after_mod(level, args)
 
 
-
 exports.single_line_message_ignore_express_req_at_first = do_but_ignore_req_at_first(exports.single_line_message)
 exports.message_ignore_express_req_at_first             = do_but_ignore_req_at_first(exports.message)
-
 
 
 exports.string = (x) ->
