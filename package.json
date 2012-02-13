@@ -1,6 +1,6 @@
 {
   "name"       : "yalog",
-  "version"    : "0.0.2",
+  "version"    : "0.0.3",
   "description": "Logging module that allows for custom levels and custom output support",
   "author"     : "Barret Schloerke",
   "homepage"   : "https://github.com/schloerke/yalog",
