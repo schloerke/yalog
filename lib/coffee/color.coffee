@@ -25,6 +25,15 @@ fontMap = {
   magenta: 35
   cyan   : 36
   white  : 37
+
+  high_black  : 90
+  high_red    : 91
+  high_green  : 92
+  high_yellow : 93
+  high_blue   : 94
+  high_magenta: 95
+  high_cyan   : 96
+  high_white  : 97
 }
 
 
@@ -37,6 +46,15 @@ backgroundMap = {
   magenta: 45
   cyan   : 46
   white  : 47
+
+  high_black  : 100
+  high_red    : 101
+  high_green  : 102
+  high_yellow : 103
+  high_blue   : 104
+  high_magenta: 105
+  high_cyan   : 106
+  high_white  : 107
 }
 
 
