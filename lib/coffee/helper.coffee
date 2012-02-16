@@ -5,30 +5,6 @@ _    = require 'underscore'
 util = require 'util'
 
 
-
-is_express_req_obj = (obj) ->
-  obj or= {}
-  return _.has(obj, "route") and _.has(obj, "res") and _.has(obj, "next")
-
-
-item_by_keys = (obj, keyArr) ->
-  item = obj
-  for key in keyArr
-    return null unless _.has(item, key)
-    item = item[key]
-
-  return item.toString()
-
-
-req_item_by_keys = (keyArr) ->
-  return (mod) ->
-    return (level, args) ->
-      reqObj = args[0] or {}
-      return null unless is_express_req_obj(reqObj)
-
-      return item_by_keys(reqObj, keyArr)
-
-
 exports.iso_date = (opts = {}) ->
   return (mod) ->
     return (level, args) ->
@@ -39,18 +15,6 @@ exports.level = (opts = {}) ->
   return (mod) ->
     return (level, args, realTitle) ->
       return realTitle
-
-
-exports.session_user_id = ({init, defArr} = {}) ->
-  defArr ?= ["session", "user", "id"]
-  init   ?= null
-  return req_item_by_keys(defArr)
-
-
-exports.session_user_email = ({init, defArr} = {}) ->
-  defArr ?= ["session", "user", "email"]
-  init   ?= null
-  return req_item_by_keys(defArr) or init
 
 
 exports.line_number = (opts = {}) ->
@@ -89,7 +53,8 @@ exports.file_and_line = (opts = {}) ->
       return mod_title_fn(level, args) + ":" + line_fn(level, args)
 
 
-inspectToSingleLineRegex = /(?:^|\n) */g
+# no "start of line" because that is user generated, not inspect generated.
+inspectToSingleLineRegex = /\n */g
 exports.single_line_message = (opts = {}) ->
   showHidden = opts.showHidden
   depth      = opts.depth
@@ -105,8 +70,8 @@ exports.single_line_message = (opts = {}) ->
           ret.push(util.inspect(item, showHidden, depth))
 
       ret = ret.join(separator)
-      # remove all '\n' but not '\\n' as that is an escaped '\n' and not something introduced by util.inspect
-      ret = ret.replace(inspectToSingleLineRegex, '') or init
+      # remove all '\n' and spaces as they are something introduced by util.inspect
+      ret = ret.replace(inspectToSingleLineRegex, ' ') or init
       return ret
 
 
@@ -127,25 +92,6 @@ exports.message = (opts = {}) ->
       # works because of "falsy" ''.
       ret = ret.join(separator) or init
       return ret
-
-
-
-do_but_ignore_req_at_first = (fn) ->
-
-  return (opts = {}) ->
-    fn_after_opts = fn(opts)
-    return (mod) ->
-      fn_after_mod = fn_after_opts(mod)
-      return (level, args) ->
-        args or= []
-        if is_express_req_obj(args[0] or null)
-          return fn_after_mod(level, args.slice(1))
-        else
-          return fn_after_mod(level, args)
-
-
-exports.single_line_message_ignore_express_req_at_first = do_but_ignore_req_at_first(exports.single_line_message)
-exports.message_ignore_express_req_at_first             = do_but_ignore_req_at_first(exports.message)
 
 
 exports.string = (x) ->
