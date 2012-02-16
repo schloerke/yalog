@@ -1,31 +1,21 @@
 
-// Load yalog from another location to keep configurations in one spot.
-var log = require('./max_utilization_helper').with(module);
+// Load yalog configuration from another location to keep configurations in one spot.
+var maxHelper = require('./max_utilization_helper')
+var log = maxHelper.with(module);
 
-// // Can produce output with the following file and levels
-// '*'          : ['error']
-// 'main'       : ['debug', 'info', 'sql', req', 'warn', 'error']
-// 'first_file' : ['trace', 'debug', 'info', 'sql', 'req' ,'warn', 'error']
-// 'second_file': ['info', 'sql', 'req' ,'warn', 'error']
-// 'custom_file': ['debug', 'sql', 'warn', 'error']   // <- does not follow traditional model!!!
+var answerObj = {is: 42};
+answerObj.and = answerObj;
 
-var iden = function(d) {return d;};
+var ctxObj = {email: "jobs@metamarkets.com", circularObj: answerObj, other: "contextInfo", fn: function(){return true;}};
+maxHelper.add_context_flag(ctxObj);
 
-                                                              // qualifiers to make it a 'req' object
-var req = {session: { user: {email: "jobs@metamarkets.com" } } , route: {}, res: {}, next: iden};
-var fourtyTwo = 42;
+log.info( ctxObj, "The answer to life the universe and everything: '", answerObj, "'")
+log.info( ctxObj, "Info counter should be at 2. Counter value:")
+log.debug(ctxObj, "Debug counter should be at 1. Counter value:")
+log.trace(ctxObj, "this should not execute. Level is not included (too low in stack)")
+log.info( ctxObj, "Current 'ctxObj' obj: ", ctxObj)
 
-log.info(req, "The answer to life the universe and everything: '", fourtyTwo, "'")
-// "2012-02-00T00:00:00.001Z; jobs@metamarkets.com; INFO ; main:18; The answer to life the universe and everything: '|fourtyTwo|'; 1"
-
-log.info(req, "Info counter should be at 2. Counter value:")
-// "2012-02-00T00:00:00.002Z; jobs@metamarkets.com; INFO ; main:21; Info counter should be at 2. Counter value:; 2"
-
-log.debug(req, "Debug counter should be at 1. Counter value:")
-// "2012-02-00T00:00:00.003Z; jobs@metamarkets.com; DEBUG; main:24; Debug counter should be at 1. Counter value:; 1"
-
-log.trace(req, "this should not execute. Level is not included (too low in stack)")
-//
-
-log.info(req, "Current 'req' obj: ", req)
-// "2012-02-00T00:00:00.004Z; jobs@metamarkets.com; INFO ; main:31; -; Current 'req' obj:  | { session: { user: { email: 'jobs@metamarkets.com' } }  route: {}  res: {}  next: [Function] }; 3"
+// 2012-02-16T03:29:12.141Z; jobs@metamarkets.com; INFO ; main:12; -; The answer to life the universe and everything: ' | { is: 42, and: [Circular] } | '; 1
+// 2012-02-16T03:29:12.145Z; jobs@metamarkets.com; INFO ; main:13; -; Info counter should be at 2. Counter value:; 2
+// 2012-02-16T03:29:12.145Z; jobs@metamarkets.com; DEBUG; main:14; -; Debug counter should be at 1. Counter value:; 1
+// 2012-02-16T03:29:12.145Z; jobs@metamarkets.com; INFO ; main:16; -; Current 'ctxObj' obj:  | { email: 'jobs@metamarkets.com', circularObj: { is: 42, and: [Circular] }, other: 'contextInfo', fn: [Function], _myContextFlag: true }; 3

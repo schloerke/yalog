@@ -1,5 +1,7 @@
 
 var sys = require('sys');
+var CTX_FLAG = "_myContextFlag";
+
 
 function save_to_db(str) {
   // do stuff
@@ -30,6 +32,46 @@ function my_custom_counter(mod) {
 }
 
 
+function is_context_obj(obj) {
+  if (toString.call(obj) == '[object String]' ) {
+    return false;
+  }
+  return (obj != null ? obj[CTX_FLAG] : false) === true;
+}
+
+function single_line_message_without_context(opts) {
+  var single_after_opts = yalog.helper.single_line_message(opts);
+  return function(mod) {
+    var single_after_mod = single_after_opts(mod);
+    return function(level, args) {
+      if (is_context_obj(args[0] || {})) {
+        return single_after_mod(level, args.slice(1));
+      } else {
+        return single_after_mod(level, args);
+      }
+    };
+  };
+};
+
+function ctx_email(opts) {
+  return function(mod) {
+    return function(level, args) {
+      var reqObj;
+      ctxObj = args[0] || {};
+      if (is_context_obj(ctxObj)) {
+        return (ctxObj != null ? ctxObj.email : void 0) || null;
+      } else {
+        return null
+      }
+    };
+  };
+};
+
+
+
+
+
+
 var yalog = require('../index.js')
 yalog.options(
   { color         : false           // true; to force color
@@ -37,17 +79,16 @@ yalog.options(
   , loggerContext : null            // console
   , separator     : '; '
   , fnArr:
-      [ yalog.helper.iso_date()           // no options
-      , yalog.helper.session_user_email() // no options
-      , yalog.helper.level()              // no options
-      , yalog.helper.file_and_line()      // no options
-      , "-"                             // plain string to always be inserted
-      , yalog.helper.single_line_message_ignore_express_req_at_first({separator: " | "})
-      , my_custom_counter               // must execute on function that takes args ['module'], then on a function that takes args ['level', 'args']
+      [ yalog.helper.iso_date()       // no options
+      , ctx_email()                   // no options
+      , yalog.helper.level()          // no options
+      , yalog.helper.file_and_line()  // no options
+      , "-"                           // plain string to always be inserted
+      , single_line_message_without_context({separator: " | "})
+      , my_custom_counter             // must execute on function that takes args ['module'], then on a function that takes args ['level', 'args']
       ]
-
   , logLevels:
-    [ { title: "silly", color: "red"    , background: "cyan", attr: ["bold", "italic", "underline", "blink", "inverse", "hidden"]}
+    [ { title: "silly", color: "high_red", background: "cyan", attr: ["bold", "italic", "underline", "blink", "inverse", "hidden"]}
     , { title: "test" , color: "magenta"}
     , { title: "trace", color: "cyan"   }
     , { title: "debug", color: "blue"   }
@@ -67,6 +108,10 @@ yalog.options(
   }
 );
 
+
+exports.add_context_flag = function(obj) {
+  obj[CTX_FLAG] = true;
+}
 
 exports.with = function(mod) {
   return yalog.with(mod);
