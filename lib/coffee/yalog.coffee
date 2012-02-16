@@ -18,11 +18,10 @@ exports._status = status = {
   separator    : " "
   fnArr: [
     helper.iso_date()
-    helper.session_user_email()
     helper.level()
     helper.file_and_line()
     helper.string("-")
-    helper.message_ignore_express_req_at_first({separator: " "})
+    helper.single_line_message({separator: " "})
   ]
 }
 
