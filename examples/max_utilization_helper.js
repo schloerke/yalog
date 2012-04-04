@@ -1,5 +1,5 @@
 
-var sys = require('sys');
+var util = require('util');
 var CTX_FLAG = "_myContextFlag";
 
 
@@ -7,7 +7,7 @@ function save_to_db(str) {
   // do stuff
 }
 function save_to_console(str) {
-  sys.puts(str);
+  util.puts(str);
   // do stuff
 }
 function save_to_file(str) {
