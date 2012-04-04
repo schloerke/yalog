@@ -1,6 +1,6 @@
 {
   "name"       : "yalog",
-  "version"    : "0.0.4",
+  "version"    : "0.0.5",
   "description": "Logging module that allows for custom levels and custom output support",
   "author"     : "Barret Schloerke",
   "homepage"   : "https://github.com/schloerke/yalog",
@@ -11,9 +11,9 @@
     "underscore": "1.3.1"
   },
  "devDependencies": {
-    "coffee": ">= 1.1.1"
+    "coffee-script": "1.2.0"
   },
-   "contributors": [
+  "contributors": [
     { "name": "Barret Schloerke", "email": "schloerke+github@gmail.com" }
   ]
 }
