@@ -63,7 +63,7 @@ log.info('Array =', [1, 2, 3, 4], '; Object = ', {one: 1, two: 2});
 Advanced Example
 ---------------
 
-Take a look at the [examples](github.com/schloerke/yalog/tree/master/examples) directory for different examples.
+Take a look at the [examples](http://github.com/schloerke/yalog/tree/master/examples) directory for different examples.
 
 ```javascript
 // Load yalog configuration from another location to keep configurations in one spot.
@@ -89,7 +89,7 @@ log.info( ctxObj, "Current 'ctxObj' obj: ", ctxObj)
 ```
 
 
-[Changes](github.com/schloerke/yalog/blob/master/README.md)
+[Changes](http://github.com/schloerke/yalog/blob/master/README.md)
 -------
 
 Dev Development
@@ -101,6 +101,6 @@ make watch    # constantly watch files
 ```
 
 
-[License](github.com/schloerke/yalog/blob/master/LICENSE.md)
+[License](http://github.com/schloerke/yalog/blob/master/LICENSE.md)
 -------
 Released under MIT License. Enjoy and Fork!
