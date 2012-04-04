@@ -15,5 +15,11 @@
   },
   "contributors": [
     { "name": "Barret Schloerke", "email": "schloerke+github@gmail.com" }
-  ]
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/schloerke/yalog/blob/master/LICENSE"
+    }
+  ],
 }
