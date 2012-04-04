@@ -1,18 +1,19 @@
 
-sys = require('sys')
-fs  = require('fs')
+util = require('util')
+fs   = require('fs')
 
 _ = require 'underscore'
 
 config = require './config'
 color  = require './color'
 helper = require './helper'
+
 exports.helper = helper
 
 # initalize with empty inputs
 exports._status = status = {
-  logger       : sys.puts
-  loggerContext: sys
+  logger       : util.puts
+  loggerContext: util
   file         : null
   color        : process.env.TERM?.indexOf('color')  >= 0
   separator    : " "
