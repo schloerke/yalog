@@ -92,6 +92,14 @@ log.info( ctxObj, "Current 'ctxObj' obj: ", ctxObj)
 [Changes](github.com/schloerke/yalog/blob/master/README.md)
 -------
 
+Dev Development
+---------------
+
+```bash
+make compile  # compile files
+make watch    # constantly watch files
+```
+
 
 [License](github.com/schloerke/yalog/blob/master/LICENSE.md)
 -------
